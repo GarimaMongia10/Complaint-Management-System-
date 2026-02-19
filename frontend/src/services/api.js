@@ -1,10 +1,10 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://localhost:5000/api"
+  baseURL: "http://localhost:5000/api",
 });
 
-// Attach token automatically
+// Attach token if present
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
@@ -13,21 +13,12 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// ===== Auth APIs =====
-export const registerUser = (data) => api.post("/auth/register", data);
-export const loginUser = (data) => api.post("/auth/login", data);
-
-// ===== Complaint APIs =====
-export const getComplaints = () => api.get("/complaint");
+// Complaint APIs
 export const createComplaint = (data) => api.post("/complaint", data);
+export const getComplaints = () => api.get("/complaint");
 export const updateComplaint = (id, data) =>
   api.put(`/complaint/${id}`, data);
 export const deleteComplaint = (id) =>
   api.delete(`/complaint/${id}`);
-
-// ===== Admin APIs =====
-export const getReports = () => api.get("/reports");
-export const getSettings = () => api.get("/settings");
-export const updateSettings = (data) => api.put("/settings", data);
 
 export default api;
