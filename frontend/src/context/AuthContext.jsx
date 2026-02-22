@@ -1,64 +1,64 @@
-import React, { createContext, useContext, useState } from "react";
-import api from "../services/api";
+import React, { createContext, useState, useContext, useEffect } from 'react';
+import api from '../services/api';
 
-const AuthContext = createContext();
-
-export const useAuth = () => useContext(AuthContext);
+const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
-  );
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  // ===== Register =====
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const userData = localStorage.getItem('user');
+    if (token && userData) {
+      setUser(JSON.parse(userData));
+    }
+    setLoading(false);
+  }, []);
+
   const register = async (name, email, password) => {
     try {
-      const res = await api.post("/auth/register", {
-        name,
-        email,
-        password,
-      });
-
-      return { success: true };
-    } catch (err) {
+      const { data } = await api.post('/auth/register', { name, email, password });
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      setUser(data.user);
+      return { success: true, data };
+    } catch (error) {
       return {
         success: false,
-        error: err.response?.data?.message || "Registration failed",
+        error: error.response?.data?.message || 'Registration failed'
       };
     }
   };
 
-  // ===== Login =====
   const login = async (email, password) => {
     try {
-      const res = await api.post("/auth/login", {
-        email,
-        password,
-      });
-
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
-      setUser(res.data.user);
-
+      const { data } = await api.post('/auth/login', { email, password });
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      setUser(data.user);
       return { success: true };
-    } catch (err) {
+    } catch (error) {
       return {
         success: false,
-        error: err.response?.data?.message || "Login failed",
+        error: error.response?.data?.message || 'Login failed'
       };
     }
   };
 
-  // ===== Logout =====
   const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
   };
 
+  const isAdmin = user?.role === 'admin';
+
   return (
-    <AuthContext.Provider value={{ user, register, login, logout }}>
+    <AuthContext.Provider value={{ user, register, login, logout, isAdmin, loading }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);
