@@ -1,0 +1,101 @@
+[
+  {
+    "_id": "699bf0c151ade60eb3102a05",
+    "user": "699b4b0691fa994b19c8c996",
+    "title": "Electricity Bill Issue",
+    "description": "Extra charges \n",
+    "category": "Billing",
+    "priority": "Low",
+    "status": "Pending",
+    "createdAt": "2026-02-23T06:16:33.079Z",
+    "__v": 0
+  },
+  {
+    "_id": "699bf10951ade60eb3102a08",
+    "user": "699b4b0691fa994b19c8c996",
+    "title": "Contaminated Drinking Water",
+    "description": "unclean and dirty drinking water",
+    "category": "General",
+    "priority": "Low",
+    "status": "Pending",
+    "createdAt": "2026-02-23T06:17:45.449Z",
+    "__v": 0
+  },
+  {
+    "_id": "699bfca7ddc15afa8f091681",
+    "user": "699bfca7ddc15afa8f09167b",
+    "title": "Faulty Meter",
+    "description": "Faulty Electricity Meter",
+    "category": "Technical",
+    "priority": "High",
+    "status": "Pending",
+    "createdAt": "2026-02-23T07:07:19.448Z",
+    "__v": 0
+  },
+  {
+    "_id": "699bfca7ddc15afa8f091684",
+    "user": "699bfca7ddc15afa8f09167e",
+    "title": "Incorrect billing amount",
+    "description": "This month's invoice shows $40, but my plan is only $20.",
+    "category": "Billing",
+    "priority": "Medium",
+    "status": "In Progress",
+    "createdAt": "2026-02-23T07:07:19.454Z",
+    "__v": 0
+  },
+  {
+    "_id": "699bfca7ddc15afa8f091687",
+    "user": "699bfca7ddc15afa8f09167b",
+    "title": "Broken Roads",
+    "description": "Roads still broken",
+    "category": "Feedback",
+    "priority": "Low",
+    "status": "Resolved",
+    "createdAt": "2026-02-23T07:07:19.457Z",
+    "__v": 0
+  },
+  {
+    "_id": "699bfecb0d1706aa77c732be",
+    "user": "6996c37211dc0caddb9861d5",
+    "title": "Street Lights",
+    "description": "defected and non-functional street lights",
+    "category": "Feedback",
+    "priority": "Low",
+    "status": "Pending",
+    "createdAt": "2026-02-23T07:16:27.466Z",
+    "__v": 0
+  },
+  {
+    "_id": "699c094f40cbf10ca67da4ec",
+    "user": "699c014940cbf10ca67da4da",
+    "title": "Community Hall Maintenance",
+    "description": "Community hall requires urgent maintenance",
+    "category": "General",
+    "priority": "Low",
+    "status": "Pending",
+    "createdAt": "2026-02-23T08:01:19.590Z",
+    "__v": 0
+  },
+  {
+    "_id": "699c142ee96dda07dfe8efb3",
+    "user": "699bfca7ddc15afa8f09167b",
+    "title": "Login page keeps refreshing",
+    "description": "Whenever I click submit, it just refreshes without logging me in. I'm using Chrome 114.",
+    "category": "Technical",
+    "priority": "High",
+    "status": "Pending",
+    "createdAt": "2026-02-23T08:47:42.374Z",
+    "__v": 0
+  },
+  {
+    "_id": "699c142ee96dda07dfe8efb7",
+    "user": "699bfca7ddc15afa8f09167b",
+    "title": "Feature Request: Dark Mode",
+    "description": "Please add a toggle to switch to dark mode. The current brightness hurts my eyes.",
+    "category": "Feedback",
+    "priority": "Low",
+    "status": "Resolved",
+    "createdAt": "2026-02-23T08:47:42.388Z",
+    "__v": 0
+  }
+]
