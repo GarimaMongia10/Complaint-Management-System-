@@ -47,4 +47,27 @@ router.post("/login", async (req, res) => {
   res.json({ token, user });
 });
 
+// Admin Login
+router.post("/admin-login", async (req, res) => {
+  const { email, password } = req.body;
+
+  const user = await User.findOne({ email });
+  if (!user) return res.status(400).json({ message: "Admin account not found" });
+
+  if (user.role !== "admin") {
+    return res.status(403).json({ message: "Access Denied: Unrecognized Administrative Credentials" });
+  }
+
+  const match = await bcrypt.compare(password, user.password);
+  if (!match) return res.status(400).json({ message: "Wrong password" });
+
+  const token = jwt.sign(
+    { id: user._id, role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: "1d" }
+  );
+
+  res.json({ token, user });
+});
+
 module.exports = router;
