@@ -23,6 +23,11 @@ async function seed() {
             user2 = await User.create({ name: "Bob Smith", email: "bob@example.com", password: passwordHash });
         }
 
+        let admin = await User.findOne({ email: "admin@example.com" });
+        if (!admin) {
+            admin = await User.create({ name: "System Administrator", email: "admin@example.com", password: passwordHash, role: "admin" });
+        }
+
         // Create Dummy Complaints
         const dummyComplaints = [
             {
