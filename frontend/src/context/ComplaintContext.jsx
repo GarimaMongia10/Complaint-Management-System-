@@ -12,7 +12,7 @@ export const ComplaintProvider = ({ children }) => {
         if (!token) return; // Don't attempt if not logged in
         setLoading(true);
         try {
-            const response = await api.get('/complaint/my-complaints');
+            const response = await api.get('/complaint/all');
             setComplaints(response.data);
         } catch (error) {
             console.error('Error fetching complaints:', error);
@@ -41,12 +41,37 @@ export const ComplaintProvider = ({ children }) => {
         }
     };
 
-    const updateComplaintStatus = (id, newStatus) => {
-        setComplaints(prev => prev.map(c => (c._id === id || c.id === id) ? { ...c, status: newStatus } : c));
+    const updateComplaintStatus = async (id, newStatus) => {
+        try {
+            await api.put(`/complaint/${id}`, { status: newStatus });
+            setComplaints(prev => prev.map(c => (c._id === id || c.id === id) ? { ...c, status: newStatus } : c));
+        } catch (error) {
+            console.error('Error updating status:', error);
+        }
     };
 
-    const deleteComplaint = (id) => {
-        setComplaints(prev => prev.filter(c => c._id !== id && c.id !== id));
+    const updateComplaint = async (id, updatedData) => {
+        setLoading(true);
+        try {
+            await api.put(`/complaint/${id}`, updatedData);
+            await fetchComplaints();
+            return { success: true };
+        } catch (error) {
+            console.error('Error updating complaint:', error);
+            const msg = error.response?.data?.error || error.response?.data?.message || 'Failed to update complaint';
+            return { success: false, error: msg };
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const deleteComplaint = async (id) => {
+        try {
+            await api.delete(`/complaint/${id}`);
+            setComplaints(prev => prev.filter(c => c._id !== id && c.id !== id));
+        } catch (error) {
+            console.error('Error deleting complaint:', error);
+        }
     };
 
     return (
@@ -56,6 +81,7 @@ export const ComplaintProvider = ({ children }) => {
             addComplaint,
             fetchComplaints,
             updateComplaintStatus,
+            updateComplaint,
             deleteComplaint
         }}>
             {children}
