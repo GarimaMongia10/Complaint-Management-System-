@@ -11,6 +11,7 @@ import Register from './pages/Register';
 import UserDashboard from './pages/UserDashboard';
 import ComplaintPage from './pages/ComplaintPage';
 import CreateComplaint from './pages/CreateComplaint';
+import EditComplaint from './pages/EditComplaint';
 import AdminDashboard from './pages/AdminDashboard';
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
                   <Route path="/dashboard" element={<UserDashboard />} />
                   <Route path="/complaints" element={<ComplaintPage />} />
                   <Route path="/create-complaint" element={<CreateComplaint />} />
+                  <Route path="/edit-complaint/:id" element={<EditComplaint />} />
                 </Route>
 
                 {/* Admin Routes */}
