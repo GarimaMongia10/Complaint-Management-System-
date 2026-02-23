@@ -1,15 +1,20 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import api from '../services/api';
+import { useAuth } from './AuthContext';
 
 const ComplaintContext = createContext(null);
 
 export const ComplaintProvider = ({ children }) => {
     const [complaints, setComplaints] = useState([]);
     const [loading, setLoading] = useState(false);
+    const { user } = useAuth();
 
     const fetchComplaints = async () => {
         const token = localStorage.getItem('token');
-        if (!token) return; // Don't attempt if not logged in
+        if (!token) {
+            setComplaints([]);
+            return; // Don't attempt if not logged in
+        }
         setLoading(true);
         try {
             const response = await api.get('/complaint/all');
@@ -22,8 +27,12 @@ export const ComplaintProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        fetchComplaints();
-    }, []);
+        if (user) {
+            fetchComplaints();
+        } else {
+            setComplaints([]);
+        }
+    }, [user]);
 
     const addComplaint = async (newComplaint) => {
         setLoading(true);
