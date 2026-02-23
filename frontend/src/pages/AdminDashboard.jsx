@@ -10,7 +10,7 @@ const AdminDashboard = () => {
 
     const adminStats = useMemo(() => [
         { label: 'Total Inflow', value: complaints.length, icon: <BarChart3 size={24} />, color: 'var(--primary)', trend: '+5%' },
-        { label: 'Active Users', value: new Set(complaints.map(c => c.userId || 'anon')).size, icon: <Users size={24} />, color: 'var(--info)', trend: '+2' },
+        { label: 'Active Users', value: new Set(complaints.map(c => c.user?._id || c.user?.id || 'anon')).size, icon: <Users size={24} />, color: 'var(--info)', trend: '+2' },
         { label: 'Pending Rev', value: complaints.filter(c => c.status === 'Pending').length, icon: <Clock size={24} />, color: 'var(--warning)', trend: '-12%' },
         { label: 'MTTR (Avg)', value: '4.2h', icon: <CheckCircle2 size={24} />, color: 'var(--success)', trend: '-0.5h' },
     ], [complaints]);

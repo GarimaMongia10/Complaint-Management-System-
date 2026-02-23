@@ -14,6 +14,8 @@ import CreateComplaint from './pages/CreateComplaint';
 import EditComplaint from './pages/EditComplaint';
 import AdminDashboard from './pages/AdminDashboard';
 
+import AdminLogin from './pages/AdminLogin';
+
 function App() {
   return (
     <Router>
@@ -26,6 +28,7 @@ function App() {
                 {/* Public Routes */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/admin-login" element={<AdminLogin />} />
 
                 {/* Protected Routes */}
                 <Route element={<ProtectedRoute />}>

@@ -95,6 +95,9 @@ const Login = () => {
 
                 <div className="auth-footer-saas">
                     <p>Don't have an account? <Link to="/register">Create an account</Link></p>
+                    <p style={{ marginTop: '0.5rem' }}>
+                        <Link to="/admin-login" style={{ color: 'var(--text-light)', fontSize: '0.8125rem', fontWeight: '500' }}>Admin Portal Access</Link>
+                    </p>
                 </div>
             </div>
 
