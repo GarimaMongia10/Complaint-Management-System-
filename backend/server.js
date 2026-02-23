@@ -7,14 +7,43 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: true,
   credentials: true
 }));
 app.use(express.json());
 
 // MongoDB Connection
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB Connected"))
+  .then(async () => {
+    console.log("MongoDB Connected");
+
+    // Sync Settings based on existing complaints
+    try {
+      const Settings = require("./models/Settings");
+      const Complaint = require("./models/Complaint");
+
+      const stats = await Complaint.aggregate([
+        { $group: { _id: "$status", count: { $sum: 1 } } }
+      ]);
+
+      let pending = 0, inProgress = 0, resolved = 0, closed = 0;
+      stats.forEach(s => {
+        if (s._id === "Pending") pending = s.count;
+        if (s._id === "In Progress") inProgress = s.count;
+        if (s._id === "Resolved") resolved = s.count;
+        if (s._id === "Closed") closed = s.count;
+      });
+
+      await Settings.findOneAndUpdate(
+        { id: "global_stats" },
+        { pending, inProgress, resolved, closed },
+        { upsert: true, new: true }
+      );
+      console.log("Settings synced with current complaints.");
+    } catch (err) {
+      console.error("Error syncing settings:", err.message);
+    }
+  })
   .catch(err => console.log(err));
 
 // Routes
