@@ -2,7 +2,8 @@ import React from 'react';
 import { Clock, Tag, MessageSquare, Trash2, Edit3, Shield } from 'lucide-react';
 
 const ComplaintCard = ({ complaint, onEdit, onDelete, isAdmin, onStatusUpdate }) => {
-  const { id, title, description, status, category, date } = complaint;
+  const { _id, id: rawId, title, description, status, category, date } = complaint;
+  const id = _id || rawId;
 
   const getStatusClass = () => {
     switch (status.toLowerCase()) {
@@ -34,6 +35,11 @@ const ComplaintCard = ({ complaint, onEdit, onDelete, isAdmin, onStatusUpdate })
           <span className="tag-saas comment-item">
             <MessageSquare size={12} /> 2 Comments
           </span>
+          {complaint.user?.name && (
+            <span className="tag-saas author-item" style={{ background: "var(--info-bg)", color: "var(--info)" }}>
+              👤 {complaint.user.name}
+            </span>
+          )}
         </div>
       </div>
 
