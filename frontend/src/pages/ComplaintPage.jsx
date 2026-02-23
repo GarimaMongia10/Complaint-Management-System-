@@ -2,13 +2,14 @@ import React, { useState } from 'react';
 import ComplaintList from '../components/ComplaintList';
 import Message from '../components/Message';
 import { Search, Plus, Filter, SlidersHorizontal } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useComplaints } from '../context/ComplaintContext';
 
 const ComplaintPage = () => {
     const { complaints, deleteComplaint, updateComplaintStatus } = useComplaints();
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState('All');
+    const navigate = useNavigate();
 
     const filteredComplaints = complaints.filter(c => {
         const matchesSearch = c.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -24,8 +25,8 @@ const ComplaintPage = () => {
     };
 
     const handleEdit = (complaint) => {
-        console.log('Editing complaint:', complaint);
-        alert('Edit functionality would move to an edit form here.');
+        const id = complaint._id || complaint.id;
+        navigate(`/edit-complaint/${id}`);
     };
 
     return (
